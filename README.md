@@ -1,8 +1,8 @@
-# BikeBridge — Universal BLE Controller Key Mapper
+# OpenBridge — Universal BLE Controller Key Mapper
 
 Use your **Zwift Ride**, **Zwift Click v2**, or other BLE cycling controllers as a universal keyboard macro pad on Windows. Map any button to any key for virtual shifting in **MyWhoosh**, **Zwift**, **Rouvy**, or any other trainer app.
 
-![BikeBridge Screenshot](screenshot.png)
+![OpenBridge Screenshot](screenshot.png)
 
 ## Features
 

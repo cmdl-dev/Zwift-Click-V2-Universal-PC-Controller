@@ -119,7 +119,7 @@ class ConnectFrame(ctk.CTkFrame):
         self._title_frame.pack(expand=True)
 
         ctk.CTkLabel(
-            self._title_frame, text="BikeBridge",
+            self._title_frame, text="OpenBridge",
             font=ctk.CTkFont(size=32, weight="bold"),
         ).pack(pady=(0, 5))
         ctk.CTkLabel(
@@ -240,7 +240,7 @@ class ConnectFrame(ctk.CTkFrame):
             w.destroy()
 
         ctk.CTkLabel(
-            self._title_frame, text="BikeBridge",
+            self._title_frame, text="OpenBridge",
             font=ctk.CTkFont(size=32, weight="bold"),
         ).pack(pady=(0, 5))
         ctk.CTkLabel(
@@ -559,7 +559,7 @@ class ControllerFrame(ctk.CTkFrame):
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("BikeBridge Controller")
+        self.title("OpenBridge Controller")
         self.geometry("900x600")
         self.minsize(800, 550)
 

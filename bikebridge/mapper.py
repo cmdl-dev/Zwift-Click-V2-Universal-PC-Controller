@@ -75,6 +75,6 @@ class KeyMapper:
 
     @classmethod
     def default_config_path(cls) -> Path:
-        config_dir = Path(os.environ.get("APPDATA", Path.home())) / "bikebridge"
+        config_dir = Path(os.environ.get("APPDATA", Path.home())) / "openbridge"
         config_dir.mkdir(parents=True, exist_ok=True)
         return config_dir / "keymaps.json"
