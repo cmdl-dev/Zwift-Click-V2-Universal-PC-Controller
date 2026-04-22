@@ -1,37 +1,86 @@
-# Zwift Click – Universal PC Controller (MyWhoosh)
+# BikeBridge — Universal BLE Controller Key Mapper
 
-This Python script allows you to use the **Zwift Click v2** Bluetooth controller as a universal macro pad on Windows or macOS. It bypasses the need for the Zwift Companion app and connects the controller directly to your PC, mapping buttons to keyboard strokes for **Virtual Shifting** and **HUD navigation**.
+Use your **Zwift Ride**, **Zwift Click v2**, or other BLE cycling controllers as a universal keyboard macro pad on Windows. Map any button to any key for virtual shifting in **MyWhoosh**, **Zwift**, **Rouvy**, or any other trainer app.
+
+![BikeBridge Screenshot](screenshot.png)
 
 ## Features
 
-* **Auto-Discovery:** Automatically finds and connects to any "Zwift Click" device in pairing mode.
-* **Direct Connection:** Uses the native Bluetooth LE stack (no mobile bridge required).
-* **Virtual Shifting:** Pre-mapped for standard Zwift virtual shifting keys (`I` and `K`).
-* **HUD & Navigation:** Mapped for HUD toggle (`U` key) and standard menu arrows.
-* **Software Debouncing:** Built-in logic to prevent accidental multiple shifts from a single physical click.
+* **Auto-Discovery:** Scans for and connects to supported BLE controllers automatically
+* **Multi-Radio Support:** Zwift Ride's left + right BLE radios are detected and connected as one device
+* **Visual Button Tester:** See which buttons are pressed in real time with visual feedback
+* **Custom Key Mapping:** Remap any button to any key — changes saved automatically
+* **Battery Monitoring:** Live battery level display for supported devices
+* **Dark Theme GUI:** Clean, modern desktop interface
 
----
+## Supported Devices
 
-## Prerequisites
+| Device | Buttons | Battery |
+|---|---|---|
+| Zwift Ride | 16 (shift levers, d-pad, A/B/Y/Z, powerup, on/off) | Yes |
+| Zwift Click v2 | 6 (plus, minus, directional) | No |
 
-### 1. Python Environment
-Ensure you have **Python 3.8 or newer** installed. You can download it from [python.org](https://www.python.org/).
+More devices can be added by extending `BaseDevice` in the `bikebridge` library.
 
-### 2. Required Packages
-The script requires two main libraries. Install them via terminal or command prompt:
+## Quick Start
+
+### 1. Install dependencies
 
 ```bash
-pip install bleak pyautogui
+pip install bleak pyautogui customtkinter
 ```
----
 
-## ⚠️ Legal Disclaimer
+### 2. Run the GUI
 
-**Please read this carefully before using the script:**
+```bash
+python gui.py
+```
 
-1. **Not an Official Product:** This project is a community-driven workaround and is **not** an official product of Zwift, Inc. It has been developed through independent protocol analysis.
-2. **Use at Your Own Risk:** By using this script, you acknowledge that you are using an unofficial driver. While it only emulates keyboard presses, the author cannot guarantee that it complies with the latest Zwift Terms of Service.
-3. **No Warranty:** This software is provided "as is", without warranty of any kind. The author is not liable for any damages, hardware malfunctions, or account restrictions that may occur.
-4. **Trademarks:** All product names, logos, and brands (including "Zwift" and "Zwift Click") are property of their respective owners. 
+### 3. Connect and play
 
----
+1. Put your controller in pairing mode (blue blinking light)
+2. Click **Connect Device**
+3. Remap buttons if needed (click any key in the mapping list)
+4. Open your trainer app and ride!
+
+## CLI Usage
+
+If you prefer no GUI, you can use the demo script or the standalone scripts:
+
+```bash
+# Auto-detect and connect with CLI output
+python demo.py
+
+# Scan only — list all BLE devices
+python demo.py --scan-only
+
+# Standalone scripts (original)
+python zwift_ride.py     # Zwift Ride only
+python start.py          # Zwift Click v2 only
+```
+
+## Project Structure
+
+```
+bikebridge/              # Core library
+  scanner.py             # BLE device scanning
+  mapper.py              # Key mapping with JSON persistence
+  controller.py          # Device events -> keystrokes
+  devices/
+    base.py              # BaseDevice ABC — extend to add controllers
+    registry.py          # Auto-matches BLE names to drivers
+    zwift_ride.py        # Zwift Ride driver (16 buttons)
+    zwift_click_v2.py    # Zwift Click v2 driver (6 buttons)
+gui.py                   # Desktop GUI (CustomTkinter)
+demo.py                  # CLI demo
+```
+
+## Adding a New Device
+
+1. Create a new file in `bikebridge/devices/`
+2. Extend `BaseDevice` and implement `matches()`, `default_button_map()`, `_handshake()`, `_handle_notification()`, `_get_characteristics()`
+3. Register it in `bikebridge/devices/registry.py`
+
+## License
+
+MIT
